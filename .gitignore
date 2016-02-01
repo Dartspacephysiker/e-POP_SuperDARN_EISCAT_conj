@@ -1,0 +1,6 @@
+#No data dir
+data/
+
+#No bogus emacs files
+*~
+
