@@ -3,15 +3,31 @@
 PRO COMBINE_EPOP_EPHEMFILES,epop_ephem
 
   ;;Input stuff
-  ephemDir              = '/SPENCEdata/Research/Cusp/Ideas/e-POP_SuperDARN_EISCAT_conj/data/'
-  ephemFiles            = ['CAS_ephemeris_20151129_000000_235959.txt', $
-                           'CAS_ephemeris_20151130_000000_235959.txt']
+  ePOPDataDir           = '/SPENCEdata/Research/Cusp/database/e-POP/'
+  ephemDir              = ePOPDataDir+'ASCII_ephemeris/'
+  ephemFiles            = ['CAS_ephemeris_20151127_000000_235959.txt', $
+                           'CAS_ephemeris_20151128_000000_235959.txt', $
+                           'CAS_ephemeris_20151129_000000_235959.txt', $
+                           'CAS_ephemeris_20151130_000000_235959.txt', $
+                           'CAS_ephemeris_20151201_000000_235959.txt', $
+                           'CAS_ephemeris_20151202_000000_235959.txt', $
+                           'CAS_ephemeris_20151203_000000_235959.txt', $
+                           'CAS_ephemeris_20151204_000000_235959.txt', $
+                           'CAS_ephemeris_20151205_000000_235959.txt', $
+                           'CAS_ephemeris_20151206_000000_235959.txt', $
+                           'CAS_ephemeris_20151207_000000_235959.txt', $
+                           'CAS_ephemeris_20151208_000000_235959.txt', $
+                           'CAS_ephemeris_20151209_000000_235959.txt', $
+                           'CAS_ephemeris_20151210_000000_235959.txt', $
+                           'CAS_ephemeris_20151211_000000_235959.txt', $
+                           'CAS_ephemeris_20151212_000000_235959.txt', $
+                           'CAS_ephemeris_20151213_000000_235959.txt']
   nFiles                = N_ELEMENTS(ephemFiles)
 
   ;;Outputstuff
   hoyDia                = GET_TODAY_STRING(/DO_YYYYMMDD_FMT)
   outDir                = '/SPENCEdata/Research/Cusp/database/e-POP/'
-  outEphem              = 'e-POP_ephemeris--' + STRMID(ephemFiles[0],14,8) + '-' + STRMID(ephemFiles[-1],14,8) + '.sav'
+  outEphem              = ePOPDataDir+'e-POP_ephemeris--' + STRMID(ephemFiles[0],14,8) + '-' + STRMID(ephemFiles[-1],14,8) + '.sav'
   
   gotFirst              = 0
   FOR i=0,nFiles-1 DO  BEGIN
@@ -49,6 +65,6 @@ PRO COMBINE_EPOP_EPHEMFILES,epop_ephem
   ENDFOR
   
   PRINT,'Saving e-POP ephemeris data to ' + outEphem + '...'
-  SAVE,epop_ephem,FILENAME=ephemDir+outEphem
+  SAVE,epop_ephem,FILENAME=outEphem
   
 END

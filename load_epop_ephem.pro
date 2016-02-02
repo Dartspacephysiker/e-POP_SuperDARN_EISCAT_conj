@@ -16,7 +16,7 @@ PRO LOAD_EPOP_EPHEM,epop_ephem, $
 
   DefDBDir                               = '/SPENCEdata/Research/Cusp/database/e-POP/'
 
-  DefDBFile                              = 'e-POP_ephemeris--20151129-20151130.sav'
+  DefDBFile                              = 'e-POP_ephemeris--20151127-20151213.sav'
 
   IF N_ELEMENTS(DBDir) EQ 0 THEN DBDir   = DefDBDir
   IF N_ELEMENTS(DBFile) EQ 0 THEN DBFile = DefDBFile
