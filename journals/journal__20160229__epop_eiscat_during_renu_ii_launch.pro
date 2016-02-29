@@ -1,16 +1,17 @@
-;2016/02/02
-;Kristina wants to know about possible conjunctions during the rocket windows last winter
-;2016/02/29 Checking to see when e-POP was over Svalbard
-PRO JOURNAL__20160202__FIND_POSSIBLE_CONJUNCTIONS_DURING_CAPER_AND_RENU_WINDOWS
+;2016/02/29 
+;;K, RENU II was launched Dec 13 at 0734 UTC. On that day, EISCAT was pulling data 0700--~0831 UT.
+PRO JOURNAL__20160229__EPOP_EISCAT_DURING_RENU_II_LAUNCH
 
   outDir                         = '/SPENCEdata/Research/Cusp/Ideas/e-POP_SuperDARN_EISCAT_conj/data/'
-  outFile                        = GET_TODAY_STRING(/DO_YYYYMMDD_FMT) + '--e-POP_cusp_conjunctions--ephemeris--20151127-1213.txt'
+  outFile                        = GET_TODAY_STRING(/DO_YYYYMMDD_FMT) + '--e-POP_RENU_II_conjunctions--ephemeris--20151213.txt'
+
+  tLaunchDay                     = 20151213
 
   LOAD_EPOP_EPHEM,epop_ephem
 
-  timeRange                      = [060000,120000]
+  timeRange                      = [060000,090000]
   latRange                       = [71,84]
-  lonRange                       = [9,15]        ;in MLT
+  lonRange                       = [6,15]        ;in MLT
   hemi                           = 'NORTH'
   
   uniq_days                      = epop_ephem.ymd[UNIQ(epop_ephem.ymd)]
@@ -59,7 +60,7 @@ PRO JOURNAL__20160202__FIND_POSSIBLE_CONJUNCTIONS_DURING_CAPER_AND_RENU_WINDOWS
      tDay                        = uniq_days[i]
      temp_i                      = WHERE(epop_ephem.ymd EQ tDay)
      candidate_i                 = CGSETINTERSECTION(temp_i,final_i)
-     IF candidate_i[0] NE -1 THEN BEGIN
+     IF candidate_i[0] NE -1 AND tDay EQ tLaunchDay THEN BEGIN
         plotNames                = [plotNames,STRCOMPRESS(tDay,/REMOVE_ALL)]
         day_i_list.add,candidate_i
         day_nPoints              = [day_nPoints,N_ELEMENTS(candidate_i)]
@@ -106,7 +107,7 @@ PRO JOURNAL__20160202__FIND_POSSIBLE_CONJUNCTIONS_DURING_CAPER_AND_RENU_WINDOWS
   plotArr                        = MAKE_ARRAY(nGoodDays,/OBJ)
   map                            = MAP('PolarStereographic', $
                                        FILL_COLOR='light blue', $
-                                       TITLE='e-POP Cusp Crossings', $
+                                       TITLE='e-POP DURING RENU II Launch Day', $
                                        LIMIT=[60,-10,90,170], $
                                        CENTER_LONGITUDE=80)
 
@@ -117,7 +118,7 @@ PRO JOURNAL__20160202__FIND_POSSIBLE_CONJUNCTIONS_DURING_CAPER_AND_RENU_WINDOWS
   
   mc                             = MAPCONTINENTS(/FILL_BACKGROUND, FILL_COLOR='gray')
 
-  FOR i=9,nGoodDays-1 DO BEGIN
+  FOR i=0,nGoodDays-1 DO BEGIN
      plotArr[i]                  = PLOT(epop_ephem.geolon[day_i_list[i]],epop_ephem.geolat[day_i_list[i]], $
                                         NAME=plotNames[i], $
                                         COLOR=plotColors[*,i], $
